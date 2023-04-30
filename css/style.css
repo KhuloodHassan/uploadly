@@ -1,0 +1,38 @@
+/* Box Model Hack */
+* {
+    box-sizing: border-box;
+}
+  
+  /* Clear fix hack */
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+
+/* BASE STYLES */
+:root {
+    --primary-100:#4CAF50;
+    --primary-200:#2a9235;
+    --primary-300:#005100;
+    --accent-100:#FF9800;
+    --accent-200:#8f3d00;
+    --text-100:#FFFFFF;
+    --text-200:#e0e0e0;
+    --bg-100:#1E1E1E;
+    --bg-200:#2d2d2d;
+    --bg-300:#454545;
+}
+
+
+/* LAYOUT */
+
+/*  */

@@ -6,10 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uploadly</title>
 
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header>
+        <h1>Uploadly</h1>
+    </header>
     
+    <div>
+        <div>
+            <h2>Upload File</h2>
+
+            <form action="/uploadfile" enctype="multipart/form-data" method="POST"> 
+                <input type="file" name="myFile" />
+                <input type="submit" value="Upload a file"/>
+             </form>
+
+        </div>
+    </div>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
