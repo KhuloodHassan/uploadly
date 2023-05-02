@@ -17,16 +17,21 @@ const upload = multer({
     limits: { fileSize: 50000000000 } 
 })
 
-app.get('/',function(req,res){
+app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html');
 });
+
+// app.get('/uploads', (req, res) => {
+//     res.sendFile(__dirname + '/uploads.html')
+// })
 
 app.post('/uploadFile', upload.single('myFile'), (req, res, next) => {
     const file = req.file
     if (!file) {
-        const error = new Error('Please upload a file')
-        error.httpStatusCode = 400
-        return next(error)
+        res.status(400).send('Please upload a file')
+        // const error = new Error('Please upload a file')
+        // error.httpStatusCode = 400
+        // return next(error)
     }
     res.sendFile(__dirname + '/uploads.html');
 })
