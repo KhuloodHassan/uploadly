@@ -1,1 +1,18 @@
-<h1>TESTING</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploadly</title>
+</head>
+<body>
+    <h1>Uploaded Files</h1>
+    <!--Creates an unordered list and loops through the files array to display each file as a link -->
+    <ul>
+        <% files.forEach(function(file) { %>
+            <li><a href="<%= file %>"</a></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
