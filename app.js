@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 const port = process.env.PORT || 3000;
 
 const storage = multer.diskStorage({
@@ -18,6 +19,8 @@ const upload = multer({
     limits: { fileSize: 50000000000 } 
 })
 
+app.set('view engine', 'ejs');
+
 //serves static files - CSS, HTML, images, client-side
 app.use(express.static('./public'));
 
@@ -31,7 +34,6 @@ app.post('/uploadFile', upload.single('myFile'), (req, res, err) => {
         res.status(400).send('Please upload a file')
     }
     res.sendFile(__dirname + '/uploads.html');
-    res.redirect('/uploads.html')
 })
 
 //Uploads page
