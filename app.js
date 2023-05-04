@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const multer = require('multer')
+const path = require('path')
 const port = process.env.PORT || 3000;
 
 const storage = multer.diskStorage({
@@ -17,18 +18,34 @@ const upload = multer({
     limits: { fileSize: 50000000000 } 
 })
 
-app.get('/',function(req,res){
+//serves static files - CSS, HTML, images, client-side
+app.use(express.static('./public'));
+
+app.get('/', (req,res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/uploadFile', upload.single('myFile'), (req, res, next) => {
+app.post('/uploadFile', upload.single('myFile'), (req, res, err) => {
     const file = req.file
     if (!file) {
-        const error = new Error('Please upload a file')
-        error.httpStatusCode = 400
-        return next(error)
+        res.status(400).send('Please upload a file')
     }
     res.sendFile(__dirname + '/uploads.html');
+    res.redirect('/uploads.html')
+})
+
+//Uploads page
+app.get('/uploads', (req, res) => {
+    const uploadsDir = path.join(__dirname, './uploads')
+    fs.readdir(uploadsDir, (err, files) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            const filePaths = files.map(file => `./uploads/${file}`);
+            res.render('/uploads', { files: filePaths});
+        }
+    })
 })
 
 app.listen(port, ()=>{
