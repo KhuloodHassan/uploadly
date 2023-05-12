@@ -47,7 +47,7 @@ app.get('/uploads', (req, res) => {
             res.status(500).send('Internal Server Error');
         } else {
             const filePaths = files.map(file => `./uploads/${file}`);
-            res.render('/uploads', { files: filePaths});
+            res.render('/uploads.ejs', { files: filePaths});
         }
     })
 })
