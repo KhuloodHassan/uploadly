@@ -19,7 +19,9 @@ const upload = multer({
     limits: { fileSize: 50000000000 } 
 })
 
+// Sets the view engine and the views directory
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 //serves static files - CSS, HTML, images, client-side
 app.use(express.static('./public'));
