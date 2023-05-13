@@ -15,7 +15,9 @@
     <ul>
         <% files.forEach(function(file) { %>
             <!-- used path module to extract filename from the object and parsed to exclude extension -->
-            <li><a href="<%= file %>"><%= path.parse(file).name %></a></li>
+            <li><a href="<%= file %>"><%= path.parse(file).name %></a>
+                <!--Adds a download button for each file-->
+                <a href="/download/<%= path.parse(file).base %>">Download</a></li>
         <% }); %>
     </ul>
 </body>

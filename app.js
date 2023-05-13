@@ -58,6 +58,17 @@ app.get('/uploads', (req, res) => {
     })
 })
 
+//Sets route for downloading files from uploads directory and sends to client for download
+app.get('/download/:filename', (req, res) => {
+    const filePath = path.join(__dirname, 'uploads', req.params.filename);
+    res.download(filePath, (err) => {
+      if (err) {
+        console.log('Error downloading file:', err);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+  });
+
 app.listen(port, ()=>{
         console.log(`App is listening on port ${port}`);
 });
