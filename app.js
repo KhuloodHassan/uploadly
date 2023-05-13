@@ -35,7 +35,12 @@ app.post('/uploadFile', upload.single('myFile'), (req, res, err) => {
     if (!file) {
         res.status(400).send('Please upload a file')
     }
-    res.sendFile(__dirname + '/uploads.html');
+    // extract name from file object and save in fileName variable
+    const fileName = file.originalname;
+    res.redirect('/uploads')
+    
+    //res.render('/uploads.ejs');
+    //res.sendFile(__dirname + '/uploads.html');
 })
 
 //Uploads page
@@ -47,7 +52,8 @@ app.get('/uploads', (req, res) => {
             res.status(500).send('Internal Server Error');
         } else {
             const filePaths = files.map(file => `./uploads/${file}`);
-            res.render('uploads.ejs', { files: filePaths});
+            // Add path: path so we can access the path module in ejs
+            res.render('uploads.ejs', { files: filePaths, fileName: req.query.fileName, path: path });
         }
     })
 })

@@ -14,7 +14,8 @@
     <!--Creates an unordered list and loops through the files array to display each file as a link -->
     <ul>
         <% files.forEach(function(file) { %>
-            <li><a href="<%= file %>">File</a></li>
+            <!-- used path module to extract filename from the object and parsed to exclude extension -->
+            <li><a href="<%= file %>"><%= path.parse(file).name %></a></li>
         <% }); %>
     </ul>
 </body>
