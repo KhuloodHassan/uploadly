@@ -1,0 +1,29 @@
+.logo {
+    width: 150px;
+}
+
+@media (min-width: 576px) {
+    body > header {
+      --pico-block-spacing-vertical: calc(var(--pico-spacing) * 2);
+    }
+  }
+  @media (min-width: 768px) {
+    body > header {
+      --pico-block-spacing-vertical: calc(var(--pico-spacing) * 2);
+    }
+  }
+  @media (min-width: 1024px) {
+    body > header {
+      --pico-block-spacing-vertical: calc(var(--pico-spacing) * 2);
+    }
+  }
+  @media (min-width: 1280px) {
+    body > header {
+      --pico-block-spacing-vertical: calc(var(--pico-spacing) * 2);
+    }
+  }
+  @media (min-width: 1536px) {
+    body > header {
+      --pico-block-spacing-vertical: calc(var(--pico-spacing) * 2);
+    }
+  }
