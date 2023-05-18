@@ -67,7 +67,12 @@ app.get('/download/:filename', (req, res) => {
         res.status(500).send('Internal Server Error');
       }
     });
-  });
+});
+
+app.get('/uploads/:filename', (req, res) => {
+    const filePath = path.join(__dirname, 'uploads', req.params.filename);
+    res.sendFile(filePath);
+});
 
 app.listen(port, ()=>{
         console.log(`App is listening on port ${port}`);
