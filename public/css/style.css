@@ -7,6 +7,10 @@ footer {
     transform: translate(-50%,0);
 }
 
+.mw-700 {
+  max-width: 700px;
+}
+
 .translate {
     top: 50%;
     left: 50%;
