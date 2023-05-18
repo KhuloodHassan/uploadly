@@ -8,6 +8,9 @@
         <title>Uploadly</title>
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <link rel="stylesheet" href="css/pico.colors.min.css">
         <link rel="stylesheet" href="css/pico.min.css">
         <link rel="stylesheet" href="css/style.css">
 </head>
@@ -27,14 +30,15 @@
     <div class="container">
         <h1>Uploaded Files</h1>
         <!--Creates an unordered list and loops through the files array to display each file as a link -->
-        <ul>
+        <div class="grid content-center">
             <% files.forEach(function(file) { %>
                 <!-- used path module to extract filename from the object and parsed to exclude extension -->
-                <li><a href="<%= file %>"><%= path.parse(file).name %></a>
+                <div class="mh-78 shadow-md flex justify-between items-center pi-2">
+                    <p class="m-0"><a href="<%= file %>" target="_blank"><%= path.parse(file).name %></a></p>
                     <!--Adds a download button for each file-->
-                    <a href="/download/<%= path.parse(file).base %>">Download</a></li>
-            <% }); %>
-        </ul>
+                    <p class="m-0"><a href="/download/<%= path.parse(file).base %>"><button><i class='bx bx-download'></i></button></a></p>
+                </div>
+            <% }); %>    
     </div>
 </body>
 </html>
