@@ -94,16 +94,32 @@ app.get('/uploads', async (req, res) => {
 //     })
 // })
 
+//Downloads file from Supabase storage
+app.get('/download/:filename', async (req, res) => {
+    const fileName = req.params.filename
+
+    try {
+        const data = await supabase.storage
+            .from('storage-bucket')
+            .download(fileName)
+
+        res.send(data)
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('Internal Server Error')
+    }
+})
+
 //Sets route for downloading files from uploads directory and sends to client for download
-app.get('/download/:filename', (req, res) => {
-    const filePath = path.join(__dirname, 'uploads', req.params.filename);
-    res.download(filePath, (err) => {
-      if (err) {
-        console.log('Error downloading file:', err);
-        res.status(500).send('Internal Server Error');
-      }
-    });
-});
+// app.get('/download/:filename', (req, res) => {
+//     const filePath = path.join(__dirname, 'uploads', req.params.filename);
+//     res.download(filePath, (err) => {
+//       if (err) {
+//         console.log('Error downloading file:', err);
+//         res.status(500).send('Internal Server Error');
+//       }
+//     });
+// });
 
 app.get('/uploads/:filename', (req, res) => {
     const filePath = path.join(__dirname, 'uploads', req.params.filename);
