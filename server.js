@@ -10,19 +10,19 @@ const supabaseKey = process.env.KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 const port = process.env.PORT || 3000;
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname)
+//     }
+// })
 
-const upload = multer({ 
-    storage: storage, 
-    limits: { fileSize: 50000000000 } 
-})
+// const upload = multer({ 
+//     storage: storage, 
+//     limits: { fileSize: 50000000000 } 
+// })
 
 // Sets the view engine and the views directory
 app.set('view engine', 'ejs');
@@ -31,19 +31,33 @@ app.set('views', path.join(__dirname, 'views'));
 //serves static files - CSS, HTML, images, client-side
 app.use(express.static('./public'));
 
+const upload = multer()
+
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/uploadFile', upload.single('myFile'), (req, res, err) => {
+app.post('/uploadFile', upload.single('myFile'), async (req, res, next) => {
     const file = req.file
     if (!file) {
         res.status(400).send('Please upload a file')
     }
     // extract name from file object and save in fileName variable
     const fileName = file.originalname;
-    res.redirect('/uploads')
-    
+    const fileBuffer = file.buffer
+
+    try {
+        //Uploads the file to Supabase storage
+        const response = await supabase.storage
+            .from('storage-bucket')
+            .upload(fileName, fileBuffer)
+        console.log(response)
+
+        res.redirect('/uploads')
+    } catch (error) {
+        console.error(error)
+        next(error)
+    }
     //res.render('/uploads.ejs');
     //res.sendFile(__dirname + '/uploads.html');
 })
