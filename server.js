@@ -3,6 +3,11 @@ const app = express()
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+require('dotenv').config
+const { createClient } = require('@supabase/supbase-js')
+const supabaseUrl = process.env.URL
+const supabaseKey = process.env.KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
 const port = process.env.PORT || 3000;
 
 const storage = multer.diskStorage({
