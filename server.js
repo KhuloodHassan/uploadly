@@ -62,20 +62,37 @@ app.post('/uploadFile', upload.single('myFile'), async (req, res, next) => {
     //res.sendFile(__dirname + '/uploads.html');
 })
 
-//Uploads page
-app.get('/uploads', (req, res) => {
-    const uploadsDir = path.join(__dirname, './uploads')
-    fs.readdir(uploadsDir, (err, files) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
-        } else {
-            const filePaths = files.map(file => `./uploads/${file}`);
-            // Add path: path so we can access the path module in ejs
-            res.render('uploads.ejs', { files: filePaths, fileName: req.query.fileName, path: path });
-        }
-    })
+//Uploads from Supabase storage
+app.get('/uploads', async (req, res) => {
+    try {
+        //Fetches the list of uploaded files from Supabase storage
+        const response = await supabase.storage
+            .from('storage-bucket')
+            .list()
+        const files = response.data || [] //defaults to empty array if there are no files in storage
+
+        res.render('uploads.ejs', { files })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send('Internal Server Error')
+    }
 })
+
+
+//Uploads page
+// app.get('/uploads', (req, res) => {
+//     const uploadsDir = path.join(__dirname, './uploads')
+//     fs.readdir(uploadsDir, (err, files) => {
+//         if (err) {
+//             console.error(err);
+//             res.status(500).send('Internal Server Error');
+//         } else {
+//             const filePaths = files.map(file => `./uploads/${file}`);
+//             // Add path: path so we can access the path module in ejs
+//             res.render('uploads.ejs', { files: filePaths, fileName: req.query.fileName, path: path });
+//         }
+//     })
+// })
 
 //Sets route for downloading files from uploads directory and sends to client for download
 app.get('/download/:filename', (req, res) => {
